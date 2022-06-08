@@ -10,7 +10,7 @@ class TwitterBot:
         api = tweepy.API(auth)
         self.api = api
 
-    def execute(self):
+    def execute_tweet_text(self):
         file = open("content.txt", "r")
         tweets = file.readlines()
         file.close()
@@ -37,6 +37,14 @@ class TwitterBot:
             self.api.update_status(last_line)
             print("Tweet has been posted!")
 
+    def execute_tweet_media(self):
+        media = "video.mov"
+        upload_result = self.api.media_upload(media)
+        self.api.update_status(status="", media_ids=[upload_result.media_id_string])
+        print("Tweet has been posted with media!")
+
 
 bot = TwitterBot(key, key_secret, token, token_secret)
-bot.execute()
+
+# bot.execute_tweet_text()
+# bot.execute_tweet_media()
